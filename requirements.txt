@@ -1,0 +1,11 @@
+Flask>=1.0.0,<1.1.0
+flask-sqlalchemy>=2.3.0,<2.4.0
+flask-restplus>=0.11.0,<0.12.0
+flask-migrate>=2.2.0,<2.3.0
+injector>=0.13.0,<0.14.0
+flask-injector>=0.10.0,<0.11.0
+flask-testing>=0.6.2,<0.7.0
+ipfsapi>=0.4.3,<0.5.0
+
+## Not really needed. See https://github.com/alecthomas/flask_injector/issues/24
+flask-restful>=0.3.0,<0.4.0

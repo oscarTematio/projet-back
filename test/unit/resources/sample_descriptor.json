@@ -1,0 +1,32 @@
+{
+  "applications":[
+    {
+      "name": "Test App",
+      "bundle": "test.app",
+      "description": "Lorem ipsum",
+      "version": "1.0.0",
+      "picture": "==BASE64ENCODEDIMAGE==",
+      "containers": [
+        {
+          "image": "anipfshash/busybox:latest"
+        },
+        {
+          "image": "asecondipfshash/busybox:latest"
+        }
+      ]
+    },
+    {
+      "name": "Test App 2",
+      "bundle": "test.app.2",
+      "description": "Lorem ipsum 2",
+      "version": "2.0.0",
+      "picture": "==BASE64ENCODEDIMAGE2==",
+      "containers": [
+        {
+          "image": "athirdipfshash/busybox:latest"
+        }
+      ]
+    }
+   ]
+
+}

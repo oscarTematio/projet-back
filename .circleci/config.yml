@@ -1,0 +1,42 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+    - image: circleci/python:3.5-jessie-node-browsers
+    steps:
+    - checkout
+    - setup_remote_docker:
+        docker_layer_caching: true
+    - run:
+        name: Install Python deps in a venv
+        command: |
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install --user circleci -r requirements.txt
+    - run:
+        name: Run tests
+        command: |
+          pip install --user circleci pytest
+          mkdir test-reports
+          PATH=$PATH:~/.local/bin pytest --junitxml=test-reports/junit.xml
+    - store_test_results:
+        path: test-reports
+    - store_artifacts:
+        path: test-reports
+        destination: tr1
+    - run:
+        name: Build docker image
+        command: sudo -E docker build -t offlineinternet-registry.cleverapps.io/offlineinternet-arm/api -f Dockerfile.arm .
+    - run:  
+        name: Login to docker registry
+        command: sudo -E docker login --username $REGISTRY_USER --password $REGISTRY_PASSWORD offlineinternet-registry.cleverapps.io 
+    - run:
+        name: Deploy image on registry
+        command: sudo -E docker push offlineinternet-registry.cleverapps.io/offlineinternet-arm/api
+#    - run:
+#        name: Trigger image deployment
+
+
+
+    
