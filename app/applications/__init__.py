@@ -4,6 +4,7 @@ from .repository import ApplicationRepository
 from .resources import ApplicationResource
 from .service import ApplicationService
 
+
 ApplicationApi = Key('ApplicationApi')
 
 class ApplicationModule(Module):

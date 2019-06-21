@@ -3,8 +3,6 @@ from flask_restplus import Api
 from flask_sqlalchemy import SQLAlchemy
 from injector import singleton, Module, provider
 from sqlalchemy.exc import DatabaseError
-
-from app.core.ipfs_client import IpfsClient
 from .keys import Configuration, App
 
 from app.applications import application_api as application_api
@@ -30,31 +28,8 @@ api.add_namespace(application_api, path="/applications")
 # Bootstrap app
 api.init_app(app)
 
-
-@app.after_request
-def session_commit(response, db: SQLAlchemy):
-    if response.status_code >= 400:
-        return response
-    try:
-        db.session.commit()
-    except DatabaseError:
-        db.session.rollback()
-        raise
-
-    return response
-
-
-
 def configure(binder):
     binder.bind(Configuration, to=config, scope=singleton)
     binder.bind(App, to=app, scope=singleton)
-
-class CoreModule(Module):
-
-    @provider
-    @singleton
-    def provide_ipfs_client(self, config: Configuration) -> IpfsClient:
-        return IpfsClient(config)
-
 
 
